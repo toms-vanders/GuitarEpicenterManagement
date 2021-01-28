@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GE.WebAPI", "GE.WebAPI\GE.WebAPI.csproj", "{F9ABD514-069E-4344-BA26-D8D174486F14}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "GuitarEpicenterData", "GuitarEpicenterData\GuitarEpicenterData.sqlproj", "{1E6B077C-650C-4B88-9AC2-B9A56E16E5A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GE.DesktopUI", "GE.DesktopUI\GE.DesktopUI.csproj", "{28496BE4-5276-47D4-A6A6-1E9707AE7BF5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,16 @@ Global
 		{F9ABD514-069E-4344-BA26-D8D174486F14}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9ABD514-069E-4344-BA26-D8D174486F14}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9ABD514-069E-4344-BA26-D8D174486F14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E6B077C-650C-4B88-9AC2-B9A56E16E5A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E6B077C-650C-4B88-9AC2-B9A56E16E5A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E6B077C-650C-4B88-9AC2-B9A56E16E5A8}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{1E6B077C-650C-4B88-9AC2-B9A56E16E5A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E6B077C-650C-4B88-9AC2-B9A56E16E5A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E6B077C-650C-4B88-9AC2-B9A56E16E5A8}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{28496BE4-5276-47D4-A6A6-1E9707AE7BF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28496BE4-5276-47D4-A6A6-1E9707AE7BF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28496BE4-5276-47D4-A6A6-1E9707AE7BF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28496BE4-5276-47D4-A6A6-1E9707AE7BF5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
