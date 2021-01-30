@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using GE.DesktopUI.Helpers;
 
 namespace GE.DesktopUI.ViewModels
 {
@@ -11,6 +12,12 @@ namespace GE.DesktopUI.ViewModels
     {
         private string _userName;
         private string _password;
+        private IAPIHelper _apiHelper;
+
+        public LoginViewModel(IAPIHelper apiHelper)
+        {
+            _apiHelper = apiHelper;
+        }
 
         public string UserName
         {
@@ -51,8 +58,18 @@ namespace GE.DesktopUI.ViewModels
             
         }
 
-        public void LogIn()
+        public async Task LogIn()
         {
+            try
+            {
+                var result = await _apiHelper.Authenticate(UserName, Password);
+
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }
