@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using Caliburn.Micro;
+using GE.DesktopUI.Helpers;
 using GE.DesktopUI.ViewModels;
 
 namespace GE.DesktopUI
@@ -17,6 +19,11 @@ namespace GE.DesktopUI
         public Bootstrapper()
         {
             Initialize();
+
+            ConventionManager.AddElementConvention<PasswordBox>(
+                    PasswordBoxHelper.BoundPasswordProperty,
+                    "Password",
+                    "PasswordChanged");
         }
 
         protected override void Configure()
