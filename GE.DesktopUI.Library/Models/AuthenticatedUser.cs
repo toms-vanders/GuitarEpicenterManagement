@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GE.DesktopUI.Models
+namespace GE.DesktopUI.Library.Models
 {
     public class AuthenticatedUser
     {

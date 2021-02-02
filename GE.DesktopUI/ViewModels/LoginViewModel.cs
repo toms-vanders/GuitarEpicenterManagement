@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
-using GE.DesktopUI.Helpers;
+using GE.DesktopUI.Library.Api;
 
 namespace GE.DesktopUI.ViewModels
 {
@@ -93,6 +93,9 @@ namespace GE.DesktopUI.ViewModels
             {
                 ErrorMessage = "";
                 var result = await _apiHelper.Authenticate(UserName, Password);
+
+                //Capture more information about the user
+                await _apiHelper.GetLoggedInUserInfo(result.Access_Token);
 
             }
             catch (Exception ex)

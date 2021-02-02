@@ -9,6 +9,10 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "GuitarEpicenterData", "Guit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GE.DesktopUI", "GE.DesktopUI\GE.DesktopUI.csproj", "{28496BE4-5276-47D4-A6A6-1E9707AE7BF5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GE.DataAccess", "GE.DataAccess\GE.DataAccess.csproj", "{AE311884-7AF6-4297-991D-8E1C67CE6E35}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GE.DesktopUI.Library", "GE.DesktopUI.Library\GE.DesktopUI.Library.csproj", "{A5B9F027-642E-4D7F-972A-D74650815B05}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +33,14 @@ Global
 		{28496BE4-5276-47D4-A6A6-1E9707AE7BF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28496BE4-5276-47D4-A6A6-1E9707AE7BF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28496BE4-5276-47D4-A6A6-1E9707AE7BF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE311884-7AF6-4297-991D-8E1C67CE6E35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE311884-7AF6-4297-991D-8E1C67CE6E35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE311884-7AF6-4297-991D-8E1C67CE6E35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE311884-7AF6-4297-991D-8E1C67CE6E35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5B9F027-642E-4D7F-972A-D74650815B05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5B9F027-642E-4D7F-972A-D74650815B05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5B9F027-642E-4D7F-972A-D74650815B05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5B9F027-642E-4D7F-972A-D74650815B05}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
