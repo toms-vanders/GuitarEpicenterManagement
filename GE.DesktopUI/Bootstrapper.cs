@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using Caliburn.Micro;
 using GE.DesktopUI.Helpers;
 using GE.DesktopUI.Library.Api;
+using GE.DesktopUI.Library.Helpers;
 using GE.DesktopUI.Library.Models;
 using GE.DesktopUI.ViewModels;
 
@@ -37,6 +38,7 @@ namespace GE.DesktopUI
                 .Singleton<IWindowManager, WindowManager>()
                 .Singleton<IEventAggregator, EventAggregator>()
                 .Singleton<ILoggedInUserModel, LoggedInUserModel>()
+                .Singleton<IConfigHelper, ConfigHelper>()
                 .Singleton<IAPIHelper, APIHelper>();
 
             GetType().Assembly.GetTypes()
