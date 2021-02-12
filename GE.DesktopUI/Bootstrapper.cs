@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using AutoMapper;
 using Caliburn.Micro;
 using GE.DesktopUI.Helpers;
 using GE.DesktopUI.Library.Api;
 using GE.DesktopUI.Library.Helpers;
 using GE.DesktopUI.Library.Models;
+using GE.DesktopUI.Models;
 using GE.DesktopUI.ViewModels;
 
 namespace GE.DesktopUI
@@ -29,8 +31,24 @@ namespace GE.DesktopUI
                     "PasswordChanged");
         }
 
+        private IMapper ConfigureAutomapper()
+        {
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<ProductModel, ProductDisplayModel>();
+                cfg.CreateMap<CartItemModel, CartItemDisplayModel>();
+            });
+
+            var output = config.CreateMapper();
+
+            return output;
+        }
+
         protected override void Configure()
         {
+
+            _container.Instance(ConfigureAutomapper());
+
             _container.Instance(_container)
                 .PerRequest<IProductEndpoint, ProductEndpoint>()
                 .PerRequest<ISaleEndpoint, SaleEndpoint>();
