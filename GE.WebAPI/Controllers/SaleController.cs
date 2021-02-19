@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity;
 
 namespace GE.WebAPI.Controllers
 {
+    [Authorize]
     public class SaleController : ApiController
     {
         public void Post(SaleModel sale)
@@ -19,6 +20,13 @@ namespace GE.WebAPI.Controllers
             string userId = RequestContext.Principal.Identity.GetUserId();
             
             data.SaveSale(sale, userId);
+        }
+
+        [Route("GetSalesReport")]
+        public List<SaleReportModel> GetSalesReport()
+        {
+            SaleDataAccess data = new SaleDataAccess();
+            return data.GetSaleReport();
         }
     }
 }

@@ -11,15 +11,6 @@ namespace GE.DataAccess.DataAccess
     public class SaleDataAccess
     {
 
-        //public List<ProductModel> GetProducts()
-        //{
-        //    SqlDataAccess sql = new SqlDataAccess();
-
-        //    var output = sql.LoadData<ProductModel, dynamic>("dbo.spProduct_GetAll", new { }, "GuitarEpicenterData");
-
-        //    return output;
-        //}
-
         public void SaveSale(SaleModel saleInfo, string cashierId)
         {
             //TODO: Make this SOLID/DRY/Better
@@ -92,6 +83,15 @@ namespace GE.DataAccess.DataAccess
                 }
             }
 
+        }
+
+        public List<SaleReportModel> GetSaleReport()
+        {
+            SqlDataAccess sql = new SqlDataAccess();
+
+            var output = sql.LoadData<SaleReportModel, dynamic>("dbo.spSale_SaleReport", new { }, "GuitarEpicenterData");
+
+            return output;
         }
     }
 }
