@@ -9,7 +9,7 @@ using GE.DataAccess.Models;
 
 namespace GE.WebAPI.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Cashier")]
     public class ProductController : ApiController
     {
         // GET api/products
