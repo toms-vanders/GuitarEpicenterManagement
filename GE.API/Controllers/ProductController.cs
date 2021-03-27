@@ -22,6 +22,8 @@ namespace GE.API.Controllers
         {
             _config = config;
         }
+
+        [HttpGet]
         public List<ProductModel> Get()
         {
             ProductDataAccess data = new ProductDataAccess(_config);

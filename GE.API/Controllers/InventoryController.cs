@@ -23,6 +23,7 @@ namespace GE.API.Controllers
             _config = config;
         }
         [Authorize(Roles = "Manager,Admin")]
+        [HttpGet]
         public List<InventoryModel> GetSalesReport()
         {
             InventoryDataAccess data = new InventoryDataAccess(_config);
@@ -30,6 +31,7 @@ namespace GE.API.Controllers
         }
 
         [Authorize(Roles = "Admin")]
+        [HttpPost]
         public void Post(InventoryModel item)
         {
             InventoryDataAccess data = new InventoryDataAccess(_config);

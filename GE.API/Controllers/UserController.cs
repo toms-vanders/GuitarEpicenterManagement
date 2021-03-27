@@ -35,8 +35,7 @@ namespace GE.API.Controllers
         [HttpGet]
         public UserModel GetById()
         {
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // old way - RequestContext.Principal.Identity.GetUserId();
-
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             UserDataAccess data = new UserDataAccess(_config);
 
             return data.GetUserById(userId).First();
@@ -45,7 +44,7 @@ namespace GE.API.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
-        [Route("api/User/Admin/GetAllUsers")]
+        [Route("Admin/GetAllUsers")]
         public List<ApplicationUserModel> GetAllUsers()
         {
             List<ApplicationUserModel> output = new List<ApplicationUserModel>();
@@ -77,7 +76,7 @@ namespace GE.API.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
-        [Route("api/User/Admin/GetAllRoles")]
+        [Route("Admin/GetAllRoles")]
         public Dictionary<string, string> GetAllRoles()
         {
 
@@ -89,7 +88,7 @@ namespace GE.API.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        [Route("api/User/Admin/AddRole")]
+        [Route("Admin/AddRole")]
         public async Task AddARole(UserRolePairModel pairing)
         {
             var user = await _userManager.FindByNameAsync(pairing.UserId);
@@ -98,7 +97,7 @@ namespace GE.API.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        [Route("api/User/Admin/RemoveRole")]
+        [Route("Admin/RemoveRole")]
         public async Task RemoveARole(UserRolePairModel pairing)
         {
             var user = await _userManager.FindByNameAsync(pairing.UserId);

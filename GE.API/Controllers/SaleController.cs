@@ -24,6 +24,7 @@ namespace GE.API.Controllers
             _config = config;
         }
         [Authorize(Roles = "Cashier")]
+        [HttpPost]
         public void Post(SaleModel sale)
         {
             SaleDataAccess data = new SaleDataAccess(_config);
@@ -34,6 +35,7 @@ namespace GE.API.Controllers
 
         [Authorize(Roles = "Admin,Manager")]
         [Route("GetSalesReport")]
+        [HttpGet]
         public List<SaleReportModel> GetSalesReport()
         {
             SaleDataAccess data = new SaleDataAccess(_config);
