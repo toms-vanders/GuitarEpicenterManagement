@@ -7,6 +7,7 @@ using GE.DataAccess.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace GE.API.Controllers
 {
@@ -15,9 +16,15 @@ namespace GE.API.Controllers
     [Authorize]
     public class ProductController : ControllerBase
     {
+        private readonly IConfiguration _config;
+
+        public ProductController(IConfiguration config)
+        {
+            _config = config;
+        }
         public List<ProductModel> Get()
         {
-            ProductDataAccess data = new ProductDataAccess();
+            ProductDataAccess data = new ProductDataAccess(_config);
 
             return data.GetProducts();
         }

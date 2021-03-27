@@ -5,18 +5,24 @@ using System.Text;
 using System.Threading.Tasks;
 using GE.DataAccess.Internal.DataAccess;
 using GE.DataAccess.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace GE.DataAccess.DataAccess
 {
     public class SaleDataAccess
     {
+        private readonly IConfiguration _config;
 
+        public SaleDataAccess(IConfiguration config)
+        {
+            _config = config;
+        }
         public void SaveSale(SaleModel saleInfo, string cashierId)
         {
             //TODO: Make this SOLID/DRY/Better
             // Start filling in the sale detail models we will save to the database
             List<SaleDetailDBModel> details = new List<SaleDetailDBModel>();
-            ProductDataAccess products = new ProductDataAccess();
+            ProductDataAccess products = new ProductDataAccess(_config);
             var taxRate = ConfigHelper.GetTaxRate()/100;
 
             foreach (var item in saleInfo.SaleDetails)
@@ -56,7 +62,7 @@ namespace GE.DataAccess.DataAccess
             sale.Total = sale.SubTotal + sale.Tax;
 
             //Save the sale model
-            using (SqlDataAccess sql = new SqlDataAccess())
+            using (SqlDataAccess sql = new SqlDataAccess(_config))
             {
                 try
                 {
@@ -87,7 +93,7 @@ namespace GE.DataAccess.DataAccess
 
         public List<SaleReportModel> GetSaleReport()
         {
-            SqlDataAccess sql = new SqlDataAccess();
+            SqlDataAccess sql = new SqlDataAccess(_config);
 
             var output = sql.LoadData<SaleReportModel, dynamic>("dbo.spSale_SaleReport", new { }, "GuitarEpicenterData");
 

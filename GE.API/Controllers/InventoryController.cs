@@ -7,6 +7,7 @@ using GE.DataAccess.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace GE.API.Controllers
 {
@@ -15,17 +16,23 @@ namespace GE.API.Controllers
     [Authorize]
     public class InventoryController : ControllerBase
     {
+        private readonly IConfiguration _config;
+
+        public InventoryController(IConfiguration config)
+        {
+            _config = config;
+        }
         [Authorize(Roles = "Manager,Admin")]
         public List<InventoryModel> GetSalesReport()
         {
-            InventoryDataAccess data = new InventoryDataAccess();
+            InventoryDataAccess data = new InventoryDataAccess(_config);
             return data.GetInventory();
         }
 
         [Authorize(Roles = "Admin")]
         public void Post(InventoryModel item)
         {
-            InventoryDataAccess data = new InventoryDataAccess();
+            InventoryDataAccess data = new InventoryDataAccess(_config);
             data.SaveInventoryRecord(item);
         }
     }
