@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace GE.API.Controllers
 {
@@ -24,14 +25,17 @@ namespace GE.API.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IUserDataAccess _userData;
+        private readonly ILogger<UserController> _logger;
 
         public UserController(ApplicationDbContext context, 
             UserManager<IdentityUser> userManager,
-            IUserDataAccess userData)
+            IUserDataAccess userData,
+            ILogger<UserController> logger)
         {
             _context = context;
             _userManager = userManager;
             _userData = userData;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -87,7 +91,13 @@ namespace GE.API.Controllers
         [Route("Admin/AddRole")]
         public async Task AddARole(UserRolePairModel pairing)
         {
+            string loggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             var user = await _userManager.FindByNameAsync(pairing.UserId);
+
+            _logger.LogInformation("Admin {Admin} added user {User} to role {Role}", 
+                loggedInUserId, user.Id, pairing.RoleName);
+
             await _userManager.AddToRoleAsync(user, pairing.RoleName);
         }
 
@@ -96,7 +106,14 @@ namespace GE.API.Controllers
         [Route("Admin/RemoveRole")]
         public async Task RemoveARole(UserRolePairModel pairing)
         {
+            string loggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+
             var user = await _userManager.FindByNameAsync(pairing.UserId);
+
+            _logger.LogInformation("Admin {Admin} remove user {User} from role {Role}",
+                loggedInUserId, user.Id, pairing.RoleName);
+
             await _userManager.RemoveFromRoleAsync(user, pairing.RoleName);
         }
     }
