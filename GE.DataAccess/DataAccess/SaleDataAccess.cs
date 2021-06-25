@@ -9,21 +9,22 @@ using Microsoft.Extensions.Configuration;
 
 namespace GE.DataAccess.DataAccess
 {
-    public class SaleDataAccess
+    public class SaleDataAccess : ISaleDataAccess
     {
-        private readonly IConfiguration _config;
+        private readonly IProductDataAccess _productData;
+        private readonly ISqlDataAccess _sql;
 
-        public SaleDataAccess(IConfiguration config)
+        public SaleDataAccess(IProductDataAccess productData, ISqlDataAccess sql)
         {
-            _config = config;
+            _productData = productData;
+            _sql = sql;
         }
         public void SaveSale(SaleModel saleInfo, string cashierId)
         {
             //TODO: Make this SOLID/DRY/Better
             // Start filling in the sale detail models we will save to the database
             List<SaleDetailDBModel> details = new List<SaleDetailDBModel>();
-            ProductDataAccess products = new ProductDataAccess(_config);
-            var taxRate = ConfigHelper.GetTaxRate()/100;
+            var taxRate = ConfigHelper.GetTaxRate() / 100;
 
             foreach (var item in saleInfo.SaleDetails)
             {
@@ -34,7 +35,7 @@ namespace GE.DataAccess.DataAccess
                 };
 
                 // Get the infromation about this product
-                var productInfo = products.GetProductById(detail.ProductId);
+                var productInfo = _productData.GetProductById(detail.ProductId);
 
                 if (productInfo == null)
                 {
@@ -62,40 +63,37 @@ namespace GE.DataAccess.DataAccess
             sale.Total = sale.SubTotal + sale.Tax;
 
             //Save the sale model
-            using (SqlDataAccess sql = new SqlDataAccess(_config))
+
+            try
             {
-                try
+                _sql.StartTransaction("GuitarEpicenterData");
+
+                _sql.SaveDataInTransaction("dbo.spSale_Insert", sale);
+
+                //Get ID from the sale model
+                sale.Id = _sql.LoadDataInTransaction<int, dynamic>("spSale_Lookup", new { sale.CashierId, sale.SaleDate }).FirstOrDefault();
+
+                //Finish fillin in the sale detail models
+                foreach (var item in details)
                 {
-                    sql.StartTransaction("GuitarEpicenterData");
-
-                    sql.SaveDataInTransaction("dbo.spSale_Insert", sale);
-
-                    //Get ID from the sale model
-                    sale.Id = sql.LoadDataInTransaction<int, dynamic>("spSale_Lookup", new { sale.CashierId, sale.SaleDate }).FirstOrDefault();
-
-                    //Finish fillin in the sale detail models
-                    foreach (var item in details)
-                    {
-                        item.SaleId = sale.Id;
-                        // Save the sale detail models         
-                        sql.SaveDataInTransaction("dbo.spSaleDetail_Insert", item);
-                    }
-                    sql.CommitTransaction();
+                    item.SaleId = sale.Id;
+                    // Save the sale detail models         
+                    _sql.SaveDataInTransaction("dbo.spSaleDetail_Insert", item);
                 }
-                catch
-                {
-                    sql.RollbackTransaction();
-                    throw;
-                }
+                _sql.CommitTransaction();
             }
+            catch
+            {
+                _sql.RollbackTransaction();
+                throw;
+            }
+
 
         }
 
         public List<SaleReportModel> GetSaleReport()
         {
-            SqlDataAccess sql = new SqlDataAccess(_config);
-
-            var output = sql.LoadData<SaleReportModel, dynamic>("dbo.spSale_SaleReport", new { }, "GuitarEpicenterData");
+            var output = _sql.LoadData<SaleReportModel, dynamic>("dbo.spSale_SaleReport", new { }, "GuitarEpicenterData");
 
             return output;
         }

@@ -11,9 +11,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace GE.DataAccess.Internal.DataAccess
 {
-    internal class SqlDataAccess : IDisposable
+    public class SqlDataAccess : IDisposable, ISqlDataAccess
     {
-        public SqlDataAccess (IConfiguration config)
+        public SqlDataAccess(IConfiguration config)
         {
             _config = config;
         }
@@ -29,7 +29,7 @@ namespace GE.DataAccess.Internal.DataAccess
 
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
-                List<T> rows = connection.Query<T>(storedProcedure, parameters, 
+                List<T> rows = connection.Query<T>(storedProcedure, parameters,
                     commandType: CommandType.StoredProcedure).ToList();
 
                 return rows;
@@ -112,10 +112,5 @@ namespace GE.DataAccess.Internal.DataAccess
             _transaction = null;
             _connection = null;
         }
-        // Open connect/start transaction method
-        // Load using the transaction
-        // Save using the transaction
-        // Close connection/stop transaction method
-        // Dispose
     }
 }

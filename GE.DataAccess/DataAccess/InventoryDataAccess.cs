@@ -9,29 +9,25 @@ using Microsoft.Extensions.Configuration;
 
 namespace GE.DataAccess.DataAccess
 {
-    public class InventoryDataAccess
+    public class InventoryDataAccess : IInventoryDataAccess
     {
-        private readonly IConfiguration _config;
+        private readonly ISqlDataAccess _sql;
 
-        public InventoryDataAccess(IConfiguration config)
+        public InventoryDataAccess(ISqlDataAccess sql)
         {
-            _config = config;
+            _sql = sql;
         }
 
         public List<InventoryModel> GetInventory()
         {
-            SqlDataAccess sql = new SqlDataAccess(_config);
-
-            var output = sql.LoadData<InventoryModel, dynamic>("dbo.spInventory_GetAll", new { }, "GuitarEpicenterData");
+            var output = _sql.LoadData<InventoryModel, dynamic>("dbo.spInventory_GetAll", new { }, "GuitarEpicenterData");
 
             return output;
         }
 
         public void SaveInventoryRecord(InventoryModel item)
         {
-            SqlDataAccess sql = new SqlDataAccess(_config);
-
-            sql.SaveData("dbo.spInventory_Insert", item, "GuitarEpicenterData");
+            _sql.SaveData("dbo.spInventory_Insert", item, "GuitarEpicenterData");
         }
     }
 }

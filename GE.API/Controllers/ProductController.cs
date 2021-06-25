@@ -16,19 +16,17 @@ namespace GE.API.Controllers
     [Authorize]
     public class ProductController : ControllerBase
     {
-        private readonly IConfiguration _config;
+        private readonly IProductDataAccess _productData;
 
-        public ProductController(IConfiguration config)
+        public ProductController(IProductDataAccess productData)
         {
-            _config = config;
+            _productData = productData;
         }
 
         [HttpGet]
         public List<ProductModel> Get()
         {
-            ProductDataAccess data = new ProductDataAccess(_config);
-
-            return data.GetProducts();
+            return _productData.GetProducts();
         }
     }
 }

@@ -23,22 +23,23 @@ namespace GE.API.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly IConfiguration _config;
+        private readonly IUserDataAccess _userData;
 
-        public UserController(ApplicationDbContext context, UserManager<IdentityUser> userManager, IConfiguration config)
+        public UserController(ApplicationDbContext context, 
+            UserManager<IdentityUser> userManager,
+            IUserDataAccess userData)
         {
             _context = context;
             _userManager = userManager;
-            _config = config;
+            _userData = userData;
         }
 
         [HttpGet]
         public UserModel GetById()
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            UserDataAccess data = new UserDataAccess(_config);
 
-            return data.GetUserById(userId).First();
+            return _userData.GetUserById(userId).First();
 
         }
 
@@ -63,11 +64,6 @@ namespace GE.API.Controllers
                 };
 
                 u.Roles = userRoles.Where(x => x.UserId == u.Id).ToDictionary(key => key.RoleId, val => val.Name);
-
-                //foreach (var r in user.Roles)
-                //{
-                //    u.Roles.Add(r.RoleId, roles.Where(x => x.Id == r.RoleId).First().Name);
-                //}
 
                 output.Add(u);
             }

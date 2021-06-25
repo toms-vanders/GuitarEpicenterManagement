@@ -9,21 +9,17 @@ using Microsoft.Extensions.Configuration;
 
 namespace GE.DataAccess.DataAccess
 {
-    public class UserDataAccess
+    public class UserDataAccess : IUserDataAccess
     {
-        private readonly IConfiguration _config;
+        private readonly ISqlDataAccess _sql;
 
-        public UserDataAccess(IConfiguration config)
+        public UserDataAccess(ISqlDataAccess sql)
         {
-            _config = config;
+            _sql = sql;
         }
         public List<UserModel> GetUserById(string Id)
         {
-            SqlDataAccess sql = new SqlDataAccess(_config);
-
-            var p = new { Id = Id };
-
-            var output = sql.LoadData<UserModel, dynamic>("dbo.spUserLookup", p, "GuitarEpicenterData");
+            var output = _sql.LoadData<UserModel, dynamic>("dbo.spUserLookup", new { Id }, "GuitarEpicenterData");
 
             return output;
         }

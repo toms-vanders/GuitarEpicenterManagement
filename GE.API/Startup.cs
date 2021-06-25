@@ -15,6 +15,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using GE.DataAccess.DataAccess;
+using GE.DataAccess.Internal.DataAccess;
 
 namespace GE.API
 {
@@ -38,6 +40,17 @@ namespace GE.API
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            // Personal Services
+            services.AddTransient<IInventoryDataAccess, InventoryDataAccess>();
+            services.AddTransient<IProductDataAccess, ProductDataAccess>();
+            services.AddTransient<ISaleDataAccess, SaleDataAccess>();
+            services.AddTransient<IUserDataAccess, UserDataAccess>();
+
+
+
+            services.AddTransient<ISqlDataAccess, SqlDataAccess>();
+
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = "JwtBearer";

@@ -16,4 +16,3 @@ Phase 2 Roadmap
  5. Move the database to Azure SQL
  6. Deploy the Desktop app to Azure Blob storage
  7. Web-based inventory control system
- 7. 

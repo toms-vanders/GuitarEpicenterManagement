@@ -17,25 +17,29 @@ namespace GE.API.Controllers
     public class InventoryController : ControllerBase
     {
         private readonly IConfiguration _config;
+        private readonly IInventoryDataAccess _inventoryData;
 
-        public InventoryController(IConfiguration config)
+        public InventoryController(IConfiguration config, IInventoryDataAccess inventoryData)
         {
             _config = config;
+            _inventoryData = inventoryData;
         }
+
+        public IInventoryDataAccess InventoryData { get; }
+
         [Authorize(Roles = "Manager,Admin")]
         [HttpGet]
         public List<InventoryModel> GetSalesReport()
         {
-            InventoryDataAccess data = new InventoryDataAccess(_config);
-            return data.GetInventory();
+
+            return _inventoryData.GetInventory();
         }
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
         public void Post(InventoryModel item)
         {
-            InventoryDataAccess data = new InventoryDataAccess(_config);
-            data.SaveInventoryRecord(item);
+            _inventoryData.SaveInventoryRecord(item);
         }
     }
 }
